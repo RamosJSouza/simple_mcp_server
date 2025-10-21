@@ -1,0 +1,12 @@
+{
+    "mcpServers": {
+        "simple-mcp-server": {
+            "command": "node",
+            "args": ["/Users/ramosjsouza/Documents/projetos/simple_mcp_server/build/index.js"],
+            "env": {
+                "NODE_ENV": "production"
+            },
+            "cwd": "/Users/ramosjsouza/Documents/projetos/simple_mcp_server/build"
+        }
+    }
+}

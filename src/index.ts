@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { z } from "zod";
 import axios, { AxiosError } from "axios";
-import { People, Planets, Films, SearchResponse } from "./types";
+import { People, Planets, Films, SearchResponse } from "./types.js";
 import { error } from "console";
 
 // Para exemplo simples, não está em variável de ambiente
@@ -40,9 +40,9 @@ class SimpleMcpServer {
             },
             async ({ search }) => {
                 try {
-                    const response = await this.axiosInstance.get("/people/", {
-                        params: { search },
-                    }) as { data: SearchResponse<People> };
+                const response = await this.axiosInstance.get("/people/", {
+                    params: { search },
+                }) as { data: SearchResponse<People> };
 
                 if (response.data.results.length === 0) {
                     return {
@@ -55,7 +55,7 @@ class SimpleMcpServer {
                     };
                 }
                 const charactersInfo = response.data.results
-                    .map((char) => {
+                    .map((char: People) => {
                         return `Name: ${char.name}, Height: ${char.height}, Mass: ${char.mass}, Birth Year: ${char.birth_year}, Gender: ${char.gender}, Eye Color: ${char.eye_color}, Hair Color: ${char.hair_color}, Skin Color: ${char.skin_color}`;
                     })
                     .join("\n~~~~\n\n");
@@ -98,7 +98,7 @@ class SimpleMcpServer {
                     };
                 }
                 const planetsInfo = response.data.results
-                    .map((planet) => {
+                    .map((planet: Planets) => {
                         return `Name: ${planet.name}, Diameter: ${planet.diameter}, Population: ${planet.population}, Climate: ${planet.climate}, Terrain: ${planet.terrain}, Gravity: ${planet.gravity}`;
                     })
                     .join("\n~~~~\n\n");
@@ -141,7 +141,7 @@ class SimpleMcpServer {
                     };
                 }
                 const filmsInfo = response.data.results
-                    .map((film) => {
+                    .map((film: Films) => {
                         return `Title: ${film.title}, Episode: ${film.episode_id}, Director: ${film.director}, Producer: ${film.producer}, Release Date: ${film.release_date}`;
                     })
                     .join("\n~~~~\n\n");
@@ -190,7 +190,46 @@ class SimpleMcpServer {
     }
 
     private setupResources(): void {
-        // TODO: Implement resources
+        this.server.registerResource(
+            "all_films",
+            "swapi://films/all",
+            {
+                title: "All films Star Wars",
+                description: "All films Star Wars, in API",
+            },
+            async () => {
+                try {
+                    const response = await this.axiosInstance.get(`/films/`) as { data: SearchResponse<Films> };
+                    
+                    const filmsInfo = response.data.results
+                        .sort((a: Films, b: Films) => a.episode_id - b.episode_id)
+                        .map((film: Films) => {
+                            return `Title: ${film.title}, Episode: ${film.episode_id}, Director: ${film.director}, Producer: ${film.producer}, Release Date: ${film.release_date}`;
+                        })
+                        .join("\n~~~~\n\n");
+                    
+                    return {
+                        contents: [
+                            {
+                                text: `Found ${response.data.results.length} films (ordered by episode):\n\n${filmsInfo}`,
+                                uri: "swapi://films/all",
+                                mimeType: "text/plain"
+                            }
+                        ]
+                    };
+                } catch (error) {
+                    return {
+                        contents: [
+                            {
+                                text: `Error occurred during All films search: ${error instanceof Error ? error.message : 'Unknown error'}`,
+                                uri: "error",
+                                mimeType: "text/plain"
+                            }
+                        ]
+                    };
+                }
+            }
+        );
     }
 
     private handleError(error: any, operation: string) {
@@ -199,7 +238,7 @@ class SimpleMcpServer {
             content: [
                 {
                     type: "text" as const,
-                    text: `Error occurred during ${operation}: ${error.message || 'Unknown error'}`,
+                    text: `Error occurred during ${operation}: ${error instanceof Error ? error.message : 'Unknown error'}`,
                 }
             ]
         };
