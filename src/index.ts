@@ -158,6 +158,35 @@ class SimpleMcpServer {
             }
         }
         );
+        
+        this.server.registerTool(
+            "search_characters_byId",
+            {
+                title: "Search character by ID Star Wars",
+                description: "Search a specific Star Wars character by ID",
+                inputSchema: {
+                    id: z.number().describe("ID of the Star Wars character"),
+                },
+            },
+            async ({ id }) => {
+                try {
+                    const response = await this.axiosInstance.get(`/people/${id}/`) as { data: People };
+
+                    const characterInfo = `Name: ${response.data.name}, Height: ${response.data.height}, Mass: ${response.data.mass}, Birth Year: ${response.data.birth_year}, Gender: ${response.data.gender}, Eye Color: ${response.data.eye_color}, Hair Color: ${response.data.hair_color}, Skin Color: ${response.data.skin_color}`;
+                    
+                    return {
+                        content: [
+                            {
+                                type: "text" as const,
+                                text: `Character found:\n\n${characterInfo}`,
+                            }
+                        ]
+                    };
+                } catch (error) {
+                    return this.handleError(error, "Character search by ID");
+                }
+            }
+        );
     }
 
     private setupResources(): void {
