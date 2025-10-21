@@ -1,21 +1,52 @@
 {
-  "name": "simple_mcp_server",
+  "name": "simple-mcp-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Model Context Protocol (MCP) server for Star Wars API integration. A portfolio micro-project demonstrating MCP server development with SWAPI integration for Claude Desktop and MCP Inspector.",
+  "main": "build/index.js",
   "type": "module",
-  "bin":{
-    "simple_mcp_server": "./build/index.js"
+  "bin": {
+    "simple-mcp-server": "./build/index.js"
   },
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
     "watch": "tsc --watch",
-    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "start": "node build/index.js",
+    "dev": "npm run watch"
   },
-  "keywords": [],
-  "author": "Ramos de Souza Janones <GitHub: @RamosJSouza>",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude-desktop",
+    "star-wars",
+    "swapi",
+    "api-server",
+    "typescript",
+    "nodejs",
+    "portfolio",
+    "ai-integration",
+    "claude-ai",
+    "mcp-server",
+    "mcp-inspector",
+    "rest-api",
+    "microservice"
+  ],
+  "author": {
+    "name": "Ramos de Souza Janones",
+    "email": "ramos.souza.janones@gmail.com",
+    "url": "https://github.com/RamosJSouza",
+    "linkedin": "https://linkedin.com/in/ramos-souza"
+  },
   "license": "MIT",
-  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RamosJSouza/simple-mcp-server.git"
+  },
+  "homepage": "https://github.com/RamosJSouza/simple-mcp-server#readme",
+  "bugs": {
+    "url": "https://github.com/RamosJSouza/simple-mcp-server/issues"
+  },
   "devDependencies": {
     "@types/node": "^24.9.1",
     "typescript": "^5.9.3"

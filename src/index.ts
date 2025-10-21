@@ -251,6 +251,7 @@ class SimpleMcpServer {
 }
 
 const server = new SimpleMcpServer();
+console.log("Starting MCP Server...");
 server.run().catch(error => {
     console.log("Erro to start the MCP Server", error);
     process.exit(1);
