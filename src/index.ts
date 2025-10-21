@@ -1,9 +1,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import axios, { AxiosError } from "axios";
 import { People, Planets, Films, SearchResponse } from "./types.js";
-import { error } from "console";
 
 // Para exemplo simples, não está em variável de ambiente
 // Caso for utilizar em projeto real de produção, lembre-se de guardar.
@@ -245,12 +244,9 @@ class SimpleMcpServer {
     }
 
     async run(): Promise<void> {
-        const transport = new StdioClientTransport({
-            command: "node",
-            args: [process.argv[1]]
-        });
+        const transport = new StdioServerTransport();
         await this.server.connect(transport);
-        console.log("connected to the server");
+        console.log("MCP Server running on stdio");
     }
 }
 
