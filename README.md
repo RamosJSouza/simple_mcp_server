@@ -70,6 +70,12 @@ O MCP Inspector é uma ferramenta web que permite testar e interagir com servido
    - Visualize os resources na aba "Resources"
    - Execute consultas e veja os resultados em tempo real
 
+#### 🖼️ Interface do MCP Inspector
+
+![MCP Inspector Interface](images/image.png)
+
+*Interface do MCP Inspector mostrando a busca por "anakin" e o resultado detalhado do personagem Anakin Skywalker com todas as informações (nome, altura, massa, ano de nascimento, gênero, cor dos olhos, cor do cabelo e cor da pele). A ferramenta permite testar todos os tools disponíveis de forma interativa.*
+
 **Documentação oficial do MCP Inspector:** [Model Context Protocol Inspector](https://github.com/modelcontextprotocol/inspector)
 
 ### Opção 2: Claude Desktop
@@ -203,7 +209,7 @@ Desenvolvedor Full Stack com mais de 14 anos de experiência em arquiteturas esc
 
 ## ⚠️ Nota Importante
 
-**Este projeto foi desenvolvido 100% manualmente, sem utilização de IA** para geração de código. Todo o desenvolvimento foi realizado através de conhecimento técnico próprio e experiência profissional.
+**Este projeto foi desenvolvido 100% manualmente, sem utilização de IA** para geração de código. Todo o desenvolvimento foi realizado através de conhecimento técnico próprio e experiência profissional, mesmo sendo um simples MCP Server.
 
 ## 📄 Licença
 
